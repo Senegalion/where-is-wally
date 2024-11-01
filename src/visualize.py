@@ -1,12 +1,14 @@
 import matplotlib.pyplot as plt
 import cv2
 
-def display_image(image, title=""):
-    plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    plt.title(title)
-    plt.axis('off')
+def visualize_images(X, y, num=5):
+    plt.figure(figsize=(10, 10))
+    for i in range(num):
+        plt.subplot(1, num, i + 1)
+        plt.imshow(X[i])
+        plt.title('Label: ' + ('Wally' if y[i] == 1 else 'Not Wally'))
+        plt.axis('off')
     plt.show()
 
-if __name__ == "__main__":
-    image = cv2.imread('./images/image1_wally.jpg')
-    display_image(image, "Test Image")
+# After loading your images and labels
+visualize_images(X, y)

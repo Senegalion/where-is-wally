@@ -20,7 +20,9 @@ def predict(image_path, model):
 
 if __name__ == "__main__":
     model = load_model('../models/model.keras')
-    image_path = './images/image7_no_wally.jpg'
+    # image_path = './images/crowd_images/without_wally_images/image19_no_wally.jpg'
+    # image_path = './images/crowd_images/with_wally_images/image6_wally.jpg'
+    image_path = './images/wally_images/wally_2.jpg'
     if predict(image_path, model):
         print("Wally is present!")
     else:

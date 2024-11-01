@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow.keras import layers, models
 import numpy as np
-from preprocess import load_images, split_data
+from preprocess import prepare_data
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
 
@@ -24,8 +24,7 @@ def create_model():
     return model
 
 if __name__ == "__main__":
-    images, labels = load_images('./images')
-    X_train, X_test, y_train, y_test = split_data(images, labels)
+    X_train, X_test, y_train, y_test = prepare_data()
 
     datagen = ImageDataGenerator(
         rotation_range=20,
