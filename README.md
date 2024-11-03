@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project aims to develop a machine learning model that can locate Wally in images from the classic childhood game "Where's Wally?". The goal is to identify whether Wally is present in a given image and to provide a simulated path for Wally to move once found.
+This project aims to develop a machine learning model that can locate Wally in images from the classic childhood game "Where's Wally?". The goal is to identify whether Wally is present in a given image and (if yes) highlight him.
 
 ## Objectives
 
