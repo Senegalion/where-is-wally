@@ -1,9 +1,8 @@
-import tensorflow as tf
-from tensorflow.keras import layers, models
+import os
 import numpy as np
+from sklearn.model_selection import train_test_split
+from tensorflow.keras import layers, models
 from preprocess import prepare_data
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-import matplotlib.pyplot as plt
 
 def create_model():
     model = models.Sequential([
@@ -17,37 +16,22 @@ def create_model():
         layers.Dense(128, activation='relu'),
         layers.Dense(1, activation='sigmoid')
     ])
-    
-    model.compile(optimizer='adam',
-                  loss='binary_crossentropy',
-                  metrics=['accuracy'])
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     return model
 
-if __name__ == "__main__":
-    X_train, X_test, y_train, y_test = prepare_data()
-
-    datagen = ImageDataGenerator(
-        rotation_range=20,
-        width_shift_range=0.2,
-        height_shift_range=0.2,
-        shear_range=0.2,
-        zoom_range=0.2,
-        horizontal_flip=True
-    )
-
-    datagen.fit(X_train)
+def train_model():
+    images, labels = prepare_data()
+    X_train, X_val, y_train, y_val = train_test_split(images, labels, test_size=0.2, random_state=42)
 
     model = create_model()
-    history = model.fit(datagen.flow(X_train, y_train, batch_size=32), 
-                        validation_data=(X_test, y_test), epochs=20)
+    history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=20, batch_size=32)
+
+    model_dir = './model'
+    if not os.path.exists(model_dir):
+        os.makedirs(model_dir)
     
-    plt.plot(history.history['accuracy'], label='accuracy')
-    plt.plot(history.history['val_accuracy'], label='val_accuracy')
-    plt.xlabel('Epoch')
-    plt.ylabel('Accuracy')
-    plt.ylim([0, 1])
-    plt.legend(loc='lower right')
-    plt.show()
-    
-    model.save('../models/model.keras')
+    model.save(os.path.join(model_dir, 'model.keras'))
     print("Model trained and saved.")
+    
+if __name__ == "__main__":
+    train_model()
