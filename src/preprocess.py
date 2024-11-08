@@ -16,12 +16,13 @@ def load_images_from_folder(folder, label):
 
 def augment_images(images):
     datagen = ImageDataGenerator(
-        rotation_range=20,
+        rotation_range=30,
         width_shift_range=0.2,
         height_shift_range=0.2,
         shear_range=0.2,
         zoom_range=0.2,
-        horizontal_flip=True
+        horizontal_flip=True,
+        fill_mode='nearest'
     )
     augmented_images = []
     for image in images:
